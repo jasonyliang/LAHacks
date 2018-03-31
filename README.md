@@ -1,0 +1,2 @@
+# LAHacks
+LAHacks team repository

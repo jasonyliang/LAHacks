@@ -46,7 +46,8 @@ def main():
        coords = process_test(frame,nose_cascade)
        cv2.imshow('img',frame)
        vector = convert_coords(coords, frames)
-       
+       game = Brickgame()
+       game.run(vector)
        
        
        if cv2.waitKey(1) & 0xFF == ord('y'):

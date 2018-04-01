@@ -76,18 +76,37 @@ class Brickgame:
         for brick in self.bricks:
             pygame.draw.rect(self.screen, self.brick_col, brick)
     
-    def check_input(self):
+    def check_input(self,vector):
         keys = pygame.key.get_pressed()
-        if keys[pygame.K_LEFT]:
-            self.paddle.left -= 15
-            if self.paddle.left < 0:
-                self.paddle.left = 0
- 
-        if keys[pygame.K_RIGHT]:
+##        if keys[pygame.K_LEFT]:
+##            self.paddle.left -= 15
+##            if self.paddle.left < 0:
+##                self.paddle.left = 0
+## 
+##        if keys[pygame.K_RIGHT]:
+##            self.paddle.left += 15
+##            if self.paddle.left > self.paddle_max:
+##                self.paddle.left = self.paddle_max
+
+        if vector == 1:
+            self.paddle.left += 5
+        elif vector == 2:
+            self.paddle.left += 10
+        elif vector == 3:
             self.paddle.left += 15
-            if self.paddle.left > self.paddle_max:
-                self.paddle.left = self.paddle_max
- 
+        elif vector == 4:
+            self.paddle.left += 20
+        elif vector == -1:
+            self.paddle.left -= 5
+        elif vector == -2:
+            self.paddle.left -= 10
+        elif vector == -3:
+            self.paddle.left -= 15
+        elif vector == -4:
+            self.paddle.left -= 20
+        elif vector == 0:
+            pass
+            
         if keys[pygame.K_SPACE] and self.state == self.ball_in_paddle:
             self.ball_vel = [15,-15]
             self.state = self.Game_on
@@ -143,7 +162,7 @@ class Brickgame:
             y = (self.screen_dim[1] - size[1])/2
             self.screen.blit(font_surface, (x,y))
 
-    def run(self):
+    def run(self,vector):
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -151,7 +170,7 @@ class Brickgame:
 
             self.clock.tick(50)
             self.screen.fill(self.blue_2)
-            self.check_input()
+            self.check_input(vector)
 
             if self.state == self.Game_on:
                 self.move_ball()
@@ -177,8 +196,8 @@ class Brickgame:
     
           
             
-if __name__ == "__main__":
-    Brickgame().run() 
-                
+#if __name__ == "__main__":
+#    Brickgame().run() 
+#                
             
     

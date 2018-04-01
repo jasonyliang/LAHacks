@@ -37,6 +37,8 @@ def main():
        ret, frame = cap.read()
        cv2.imshow('img',frame)
        
+       #Note Image is mirrored so flip the coordinates
+       
        if cv2.waitKey(1) & 0xFF == ord('y'):
            break
        

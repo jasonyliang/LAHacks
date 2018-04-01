@@ -1,10 +1,14 @@
 import pygame
+help(pygame)
+'''
+Tryna do pygame my dudes
+'''
 
-from pygame.locals import *
-from sys import exit
-import random
+# screen=pygame.display.set_mode((640,480),0,32)
+# pygame.display.set_caption("Pong Pong!")
+# back = pygame.Surface((640,480))
+# background = back.convert()
+# background.fill((0,0,0))
 
-pygame.init()
+# pygame.display.flip()
 
-screen=pygame.display.set_mode((640,480),0,32)
-pygame.display.set_caption("Pong Pong!")

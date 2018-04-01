@@ -101,7 +101,7 @@ def convert_coords(face_coords,frames):
     interval = frame_width/divisions
     if face_coords:
         x = face_coords[0]
-        nose_coord = (x- frame_width/2)
+        nose_coord = -(x- frame_width/2)
         vector = int(nose_coord // interval) + int(round((nose_coord % interval)/interval))
         return vector 
     else:

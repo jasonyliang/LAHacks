@@ -4,6 +4,61 @@ import sys
 This is a prototype of breakout
 '''
 
+<<<<<<< HEAD:pygame-attempt/breakout.py
+screen_dim = 640, 480
+
+#objects
+Brickw = 110
+Brickh = 30
+paddlew = 120
+paddleh = 24
+ball_diameter = 24
+ball_radius = ball_diameter/2
+
+paddle_max= screen_dim[0] - paddlew
+ball_maxx, ball_maxy = screen_dim[0] - ball_diameter, screen_dim[1] - ball_diameter
+
+paddle_y = screen_dim[1] - paddleh - 10
+
+#colors
+black = (30,144,255)
+white = (255,255,255)
+blue  = (0,0,255)
+green = (0, 200, 15)
+brick_col = (255,215,0)
+
+# phases
+ball_in_paddle = 0
+Game_on = 1
+Game_win = 2
+Game_over = 3
+
+# Sprites
+class paddle_image(pygame.sprite.Sprite):
+    '''
+    This class will represent the panels
+    '''
+    def __init__(self, width, height, image):
+        #call parent function
+        super().__init__()
+        self.image = pygame.image.load(image).convert()
+        self.image.set_colorkey(white)
+        self.rect = self.image.get_rect()
+        
+        
+class paddle(pygame.sprite.Sprite):
+    def __init__(self, color, height, width):
+        super().__init__()
+        self.image = pygame.Surface([height, width])
+        self.image.fill(white)
+        self.image.set_colorkey(white)
+
+        pygame.draw.rect(self.image, color, [0,0, width, height])
+        self.rect = self.image.get_rect()
+        
+
+=======
+>>>>>>> fd807f6b53f356182acf6b29cebca5448a0ed83b:Opencv/breakout.py
 #Game (main program)
 class Brickgame:
     screen_dim = 640, 480
@@ -22,11 +77,11 @@ class Brickgame:
     paddle_y = screen_dim[1] - paddleh - 10
     
     #colors
-    blue_2 = (30,144,255)
+    black = (0,0,0)
     white = (255,255,255)
     blue  = (0,0,255)
     green = (0, 200, 15)
-    brick_col = (255,215,0)
+    brick_col = (200,200,0)
     
     # phases
     ball_in_paddle = 0
@@ -55,12 +110,17 @@ class Brickgame:
         self.score = 0
         self.state = self.ball_in_paddle
 
+<<<<<<< HEAD:pygame-attempt/breakout.py
+        self.paddle = pygame.Rect(300, paddle_y, paddlew, paddleh)
+        #self.paddle = paddle(blue, paddleh, paddlew)
+        self.ball = pygame.Rect(300, paddle_y - ball_diameter, ball_diameter, ball_diameter)
+=======
         self.paddle = pygame.Rect(300, self.paddle_y, self.paddlew, self.paddleh)
         self.ball = pygame.Rect(300, self.paddle_y - self.ball_diameter, self.ball_diameter, self.ball_diameter)
+>>>>>>> fd807f6b53f356182acf6b29cebca5448a0ed83b:Opencv/breakout.py
         self.ball_vel = [15,-15]
  
         self.create_bricks()
-        
     def create_bricks(self):
         y_ofs = 35
         self.bricks = []
@@ -70,7 +130,6 @@ class Brickgame:
                 self.bricks.append(pygame.Rect(x_ofs,y_ofs,self.Brickw,self.Brickh))
                 x_ofs += self.Brickw + 10
             y_ofs += self.Brickh + 5
-            
     def draw_bricks(self):
 
         for brick in self.bricks:
@@ -93,8 +152,9 @@ class Brickgame:
             self.state = self.Game_on
         elif keys[pygame.K_RETURN] and (self.state == self.Game_over or self.state == self.Game_win):
             self.init_game()
-
-            
+        
+        
+        
     def move_ball(self):
         self.ball.left += self.ball_vel[0]
         self.ball.top += self.ball_vel[1]
@@ -130,6 +190,7 @@ class Brickgame:
                 self.state = self.ball_in_paddle
             else:
                 self.state = self.Game_over
+                
     def show_stats(self):
         if self.font:
             font_surface = self.font.render("SCORE: " + str(self.score) + " LIVES: " + str(self.lives), False, self.white)
@@ -150,7 +211,7 @@ class Brickgame:
                     sys.exit
 
             self.clock.tick(50)
-            self.screen.fill(self.blue_2)
+            self.screen.fill(self.black)
             self.check_input()
 
             if self.state == self.Game_on:
@@ -167,18 +228,21 @@ class Brickgame:
                 self.show_message("Congrats")
             self.draw_bricks()
 
-            pygame.draw.rect(self.screen, self.blue, self.paddle)
+<<<<<<< HEAD:pygame-attempt/breakout.py
+            pygame.draw.rect(self.screen, blue, self.paddle)
             self.screen.blit(pygame.image.load("pancake.jpg"), self.paddle)
+            pygame.draw.circle(self.screen, white, (int(self.ball.left + ball_radius), int(self.ball.top + ball_radius)), int(ball_radius))
+=======
+            pygame.draw.rect(self.screen, self.blue, self.paddle)
             pygame.draw.circle(self.screen, self.white, (int(self.ball.left + self.ball_radius), int(self.ball.top + self.ball_radius)), int(self.ball_radius))
+>>>>>>> fd807f6b53f356182acf6b29cebca5448a0ed83b:Opencv/breakout.py
 
             self.show_stats()
 
             pygame.display.flip()
     
-          
+
             
-if __name__ == "__main__":
-    Brickgame().run() 
                 
             
     

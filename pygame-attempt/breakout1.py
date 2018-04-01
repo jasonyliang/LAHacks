@@ -78,16 +78,38 @@ class Brickgame:
     
     def check_input(self):
         keys = pygame.key.get_pressed()
-        if keys[pygame.K_LEFT]:
-            self.paddle.left -= 15
-            if self.paddle.left < 0:
-                self.paddle.left = 0
- 
-        if keys[pygame.K_RIGHT]:
-            self.paddle.left += 15
-            if self.paddle.left > self.paddle_max:
-                self.paddle.left = self.paddle_max
- 
+##        if keys[pygame.K_LEFT]:
+##            self.paddle.left -= 15
+##            if self.paddle.left < 0:
+##                self.paddle.left = 0
+## 
+##        if keys[pygame.K_RIGHT]:
+##            self.paddle.left += 15
+##            if self.paddle.left > self.paddle_max:
+##                self.paddle.left = self.paddle_max
+
+        if vector > 0:
+            if vector == 1:
+                self.paddle.left += 5
+            elif vector == 2:
+                self.paddle.left += 10
+            elif vector == 3:
+                self.paddle.left += 15
+            elif vector == 4:
+                self.paddle.left += 20
+
+        elif vector < 0:
+            if vector == -1:
+                self.paddle.left -= 5
+            elif vector == -2:
+                self.paddle.left -= 10
+            elif vector == -3:
+                self.paddle.left -= 15
+            elif vector == -4:
+                self.paddle.left -= 20
+        elif vector == 0:
+            pass
+            
         if keys[pygame.K_SPACE] and self.state == self.ball_in_paddle:
             self.ball_vel = [15,-15]
             self.state = self.Game_on

@@ -80,9 +80,92 @@ class Brickgame:
             if self.paddle.left > MAX_PADDLE_X:
                 self.paddle.left = MAX_PADDLE_X
  
-        if keys[pygame.K_SPACE] and self.state == STATE_BALL_IN_PADDLE:
+        if keys[pygame.K_SPACE] and self.state == ball_in_paddle:
             self.ball_vel = [5,-5]
             self.state = STATE_PLAYING
-        elif keys[pygame.K_RETURN] and (self.state == STATE_GAME_OVER or self.state == STATE_WON):
+        elif keys[pygame.K_RETURN] and (self.state == Game_over or self.state == Game_win):
             self.init_game()
+    def move_ball(self):
+        self.ball.left += self.ball_vel[0]
+        self.ball.top += self.ball_vel[1]
+        if self.ball.left <= 0:
+            self.ball.left = 0
+            self.ball_vel[0] = -self.ball_vel[0]
+        elif self.ball.left >= ball_maxx:
+            self.ball.left = ball_maxx
+            self.ball_vel[0] = -self.ball_vel[0]
+
+        if self.ball.top <= 0:
+            self.ball.top = 0
+            self.ball_vel[1] = -self.ball_vel[1]
+    def handle_collision(self):
+        for brick in self.bricks:
+            if self.ball.colliderect(brick):
+                self.score += 3
+                self.ball_vel[1] = -self.ball_vel[1]
+                self.bricks.remove(brick)
+                break
+
+            if len(self.bricks) <= 0:
+                self.state = Game_win
+
+            if self.ball.collidirect(self.paddle):
+                self.ball.top = paddle_y - ball_diameter
+                self.ball_vel[1] = -self.ball_vel[1]
+            elif self.ball.top > self.paddle.top:
+                self.lives -= 1
+                if self.lives > 0:
+                    self.state = ball_in_paddle
+                else:
+                    self.state = Game_over
+    def show_stats(self):
+        if self.font:
+            font_surface = self.font.render("SCORE: " + str(self.score) + " LIVES: " + str(self.lives), False, WHITE)
+            self.screen.blit(font_surface, (205,5))
+
+    def show_message(self, message):
+        if self.font:
+            size = self.font.size(message)
+            font_surface = self.font.render(message, False, white)
+            x = (screen_dim[0] - size[0])/2
+            y = (screen_dim[1] - size[1])/2
+            self.screen.blit(font_surface, (x,y))
+
+    def run(self):
+        while 1:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    sys.exit
+
+            self.clock.tick(50)
+            self.screen.fill(black)
+            self.check_input()
+
+            if self.state == Game_on:
+                self.move_ball()
+                self.handle_collision()
+            elif self.state == ball_in_paddle:
+                self.ball.left = self.paddle.left + self.paddle.width/2
+                self.ball.top = self.paddle.top - self.ball.height
+                self.show_message("Launch the ball!")
+
+            elif self.state == Game_over:
+                self.show_message("GG buddy")
+            elif self.state == Game_win:
+                self.show_message("Congrats")
+            self.create_bricks()
+
+            pygame.draw.rect(self.screen, blue, self.paddle)
+            pygame.draw.circle(self.screen, white, (int(self.ball.left + ball_radius), int(self.ball.top + ball_radius)), ball_radius)
+
+            self.show_stats()
+
+            pygame.display.flip()
+    
+if __name__ == "__main__":
+    Brickgame().run()           
+            
+            
+                
+            
     

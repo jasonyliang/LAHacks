@@ -1,4 +1,5 @@
 import pygame
+import sys
 '''
 This is a prototype of breakout
 '''
@@ -77,12 +78,12 @@ class Brickgame:
  
         if keys[pygame.K_RIGHT]:
             self.paddle.left += 5
-            if self.paddle.left > MAX_PADDLE_X:
-                self.paddle.left = MAX_PADDLE_X
+            if self.paddle.left > paddle_max:
+                self.paddle.left = paddle_max5
  
         if keys[pygame.K_SPACE] and self.state == ball_in_paddle:
             self.ball_vel = [5,-5]
-            self.state = STATE_PLAYING
+            self.state = Game_on
         elif keys[pygame.K_RETURN] and (self.state == Game_over or self.state == Game_win):
             self.init_game()
     def move_ball(self):
@@ -109,7 +110,7 @@ class Brickgame:
             if len(self.bricks) <= 0:
                 self.state = Game_win
 
-            if self.ball.collidirect(self.paddle):
+            if self.ball.colliderect(self.paddle):
                 self.ball.top = paddle_y - ball_diameter
                 self.ball_vel[1] = -self.ball_vel[1]
             elif self.ball.top > self.paddle.top:
@@ -120,7 +121,7 @@ class Brickgame:
                     self.state = Game_over
     def show_stats(self):
         if self.font:
-            font_surface = self.font.render("SCORE: " + str(self.score) + " LIVES: " + str(self.lives), False, WHITE)
+            font_surface = self.font.render("SCORE: " + str(self.score) + " LIVES: " + str(self.lives), False, white)
             self.screen.blit(font_surface, (205,5))
 
     def show_message(self, message):
@@ -156,7 +157,7 @@ class Brickgame:
             self.create_bricks()
 
             pygame.draw.rect(self.screen, blue, self.paddle)
-            pygame.draw.circle(self.screen, white, (int(self.ball.left + ball_radius), int(self.ball.top + ball_radius)), ball_radius)
+            pygame.draw.circle(self.screen, white, (int(self.ball.left + ball_radius), int(self.ball.top + ball_radius)), int(ball_radius))
 
             self.show_stats()
 

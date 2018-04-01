@@ -20,7 +20,7 @@ def main():
     dir_path = 'C://Users//Ryan_Siv//Documents//GitHub//LAHacks'
     api_key = 'My First Project-e65c2d409577.json'
     client = authenticate(dir_path, api_key)
-    jason = cv2.imread('D://Misc Projects//AutoSombrero//jason.jpg')
+#    jason = cv2.imread('D://Misc Projects//AutoSombrero//jason.jpg')
 #    start = timer()
 #    nose_coords = process_images(jason, client)
 #    end = timer()
@@ -45,11 +45,7 @@ def main():
        ret, frame = cap.read()
        coords = process_test(frame,nose_cascade)
        cv2.imshow('img',frame)
-       print(coords)
-       
-       
-       
-       
+       vector = convert_coords(coords, frames)
        
        
        
@@ -100,8 +96,15 @@ def convert_coords(face_coords,frames):
     """
     ## reverse coordinates
     frame_width = frames[0]
-    x = face_coords[0]
-    z
+    divisions = 8
+    interval = frame_width/divisions
+    if face_coords:
+        x = face_coords[0]
+        nose_coord = (x- frame_width/2)
+        vector = int(nose_coord // interval) + int(round((nose_coord % interval)/interval))
+        return vector 
+    else:
+        return 0
     
 
  

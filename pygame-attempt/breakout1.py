@@ -88,25 +88,22 @@ class Brickgame:
 ##            if self.paddle.left > self.paddle_max:
 ##                self.paddle.left = self.paddle_max
 
-        if vector > 0:
-            if vector == 1:
-                self.paddle.left += 5
-            elif vector == 2:
-                self.paddle.left += 10
-            elif vector == 3:
-                self.paddle.left += 15
-            elif vector == 4:
-                self.paddle.left += 20
-
-        elif vector < 0:
-            if vector == -1:
-                self.paddle.left -= 5
-            elif vector == -2:
-                self.paddle.left -= 10
-            elif vector == -3:
-                self.paddle.left -= 15
-            elif vector == -4:
-                self.paddle.left -= 20
+        if vector == 1:
+            self.paddle.left += 5
+        elif vector == 2:
+            self.paddle.left += 10
+        elif vector == 3:
+            self.paddle.left += 15
+        elif vector == 4:
+            self.paddle.left += 20
+        elif vector == -1:
+            self.paddle.left -= 5
+        elif vector == -2:
+            self.paddle.left -= 10
+        elif vector == -3:
+            self.paddle.left -= 15
+        elif vector == -4:
+            self.paddle.left -= 20
         elif vector == 0:
             pass
             

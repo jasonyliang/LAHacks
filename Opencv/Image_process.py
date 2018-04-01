@@ -17,21 +17,17 @@ from breakout1 import Brickgame
 
 def main():
     
-    dir_path = 'C://Users//Ryan_Siv//Documents//GitHub//LAHacks'
+    dir_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     api_key = 'My First Project-e65c2d409577.json'
     client = authenticate(dir_path, api_key)
-#    jason = cv2.imread('D://Misc Projects//AutoSombrero//jason.jpg')
-#    start = timer()
-#    nose_coords = process_images(jason, client)
-#    end = timer()
-#    print(nose_coords, end - start)
+
     
     #Setting Image size to match Game Window Size
     frames = Brickgame.screen_dim
     
     ## Camera Set-up
     cap = cv2.VideoCapture(0)
-    cap.set(cv2.CAP_PROP_FPS, 15) 
+    cap.set(cv2.CAP_PROP_FPS, 30) 
     cap.set(cv2.CAP_PROP_FRAME_WIDTH, frames[0])
     cap.set(cv2.CAP_PROP_FRAME_HEIGHT, frames[1])
     
@@ -39,14 +35,17 @@ def main():
     
     nose_cascade = cv2.CascadeClassifier('./haarcascade_mcs_nose.xml')
     
+    ## Initalize Game
+    game = Brickgame()
+    
     ## Main Loop
     while True:
     # Retrieve Camera Frames
        ret, frame = cap.read()
-       coords = process_test(frame,nose_cascade)
+       coords = process_images(frame,client)
+       cv2.circle(frame, (int(coords[0]), int(coords[1])), 10, (0,255,0), -1)
        cv2.imshow('img',frame)
        vector = convert_coords(coords, frames)
-       game = Brickgame()
        game.run(vector)
        
        
@@ -56,10 +55,6 @@ def main():
     cap.release()
     cv2.destroyAllWindows()
        
-    
-
-    
-    
 
 def authenticate(dir_path, api):
     ## Load API Information from .json
@@ -101,7 +96,7 @@ def convert_coords(face_coords,frames):
     interval = frame_width/divisions
     if face_coords:
         x = face_coords[0]
-        nose_coord = -(x- frame_width/2)
+        nose_coord = (x- frame_width/2)
         vector = int(nose_coord // interval) + int(round((nose_coord % interval)/interval))
         return vector 
     else:

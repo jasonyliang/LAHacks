@@ -57,7 +57,7 @@ class Brickgame:
 
         self.paddle = pygame.Rect(300, self.paddle_y, self.paddlew, self.paddleh)
         self.ball = pygame.Rect(300, self.paddle_y - self.ball_diameter, self.ball_diameter, self.ball_diameter)
-        self.ball_vel = [15,-15]
+        self.ball_vel = [20,-20]
  
         self.create_bricks()
         
@@ -88,12 +88,12 @@ class Brickgame:
 ##            if self.paddle.left > self.paddle_max:
 ##                self.paddle.left = self.paddle_max
         if vector > 0:
-            vector *= 5
+            vector *= 20
             self.paddle.left += vector
             if self.paddle.left > self.paddle_max:
                 self.paddle.left = self.paddle_max
         elif vector < 0:
-            vector *= 5
+            vector *= 20
             self.paddle.left += vector
             if self.paddle.left < 0:
                 self.paddle.left = 0
@@ -101,9 +101,9 @@ class Brickgame:
             pass
             
         if keys[pygame.K_SPACE] and self.state == self.ball_in_paddle:
-            self.ball_vel = [15,-15]
+            self.ball_vel = [20,-20]
             self.state = self.Game_on
-        elif keys[pygame.K_RETURN] and (self.state == self.Game_over or self.state == self.Game_win):
+        elif keys[pygame.K_TAB] and (self.state == self.Game_over or self.state == self.Game_win):
             self.init_game()
 
             
@@ -156,36 +156,35 @@ class Brickgame:
             self.screen.blit(font_surface, (x,y))
 
     def run(self,vector):
-        while True:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    sys.exit
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                sys.exit
 
-            self.clock.tick(50)
-            self.screen.fill(self.blue_2)
-            self.check_input(vector)
+        self.clock.tick(50)
+        self.screen.fill(self.blue_2)
+        self.check_input(vector)
 
-            if self.state == self.Game_on:
-                self.move_ball()
-                self.handle_collision()
-            elif self.state == self.ball_in_paddle:
-                self.ball.left = self.paddle.left + self.paddle.width/2
-                self.ball.top = self.paddle.top - self.ball.height
-                self.show_message("Launch the ball!")
+        if self.state == self.Game_on:
+            self.move_ball()
+            self.handle_collision()
+        elif self.state == self.ball_in_paddle:
+            self.ball.left = self.paddle.left + self.paddle.width/2
+            self.ball.top = self.paddle.top - self.ball.height
+            self.show_message("Launch the ball!")
 
-            elif self.state == self.Game_over:
-                self.show_message("GG buddy")
-            elif self.state == self.Game_win:
-                self.show_message("Congrats")
-            self.draw_bricks()
+        elif self.state == self.Game_over:
+            self.show_message("GG buddy")
+        elif self.state == self.Game_win:
+            self.show_message("Congrats")
+        self.draw_bricks()
 
-            pygame.draw.rect(self.screen, self.blue, self.paddle)
-            self.screen.blit(pygame.image.load("pancake.jpg"), self.paddle)
-            pygame.draw.circle(self.screen, self.white, (int(self.ball.left + self.ball_radius), int(self.ball.top + self.ball_radius)), int(self.ball_radius))
+        pygame.draw.rect(self.screen, self.blue, self.paddle)
+        self.screen.blit(pygame.image.load("pancake.jpg"), self.paddle)
+        pygame.draw.circle(self.screen, self.white, (int(self.ball.left + self.ball_radius), int(self.ball.top + self.ball_radius)), int(self.ball_radius))
 
-            self.show_stats()
+        self.show_stats()
 
-            pygame.display.flip()
+        pygame.display.flip()
     
           
             

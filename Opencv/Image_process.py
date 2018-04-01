@@ -15,6 +15,10 @@ from google.oauth2 import service_account
 from google.cloud import vision
 from google.cloud.vision import types
 from timeit import default_timer as timer
+import pygame
+import sys
+import breakout
+
 
 def main():
     
@@ -26,18 +30,21 @@ def main():
 #    nose_coords = process_images(jason, client)
 #    end = timer()
 #    print(nose_coords, end - start)
-    frame_width = 680
-    frame_height = 480
+    
+    frames = breakout.Brickgame.screen_dim
+    
     
     cap = cv2.VideoCapture(0)
     cap.set(cv2.CAP_PROP_FPS, 15) 
-    cap.set(cv2.CAP_PROP_FRAME_WIDTH, frame_width)
-    cap.set(cv2.CAP_PROP_FRAME_HEIGHT, frame_height)
+    cap.set(cv2.CAP_PROP_FRAME_WIDTH, frames[0])
+    cap.set(cv2.CAP_PROP_FRAME_HEIGHT, frames[1])
     while True:
        ret, frame = cap.read()
        cv2.imshow('img',frame)
        
-       #Note Image is mirrored so flip the coordinates
+       
+       
+       
        
        if cv2.waitKey(1) & 0xFF == ord('y'):
            break
@@ -46,6 +53,7 @@ def main():
     cv2.destroyAllWindows()
        
     
+
     
     
 

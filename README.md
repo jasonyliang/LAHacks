@@ -1,4 +1,4 @@
 # LAHacks
 LAHacks team repository
 
-Team Members: Ryan, Tim, Daniel, Jason
+Team Members: Ryan Sivoraphonh, Tim Koo, Daniel Lee, Jason Liang

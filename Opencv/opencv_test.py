@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 """
-Created on Sat Mar 31 14:43:19 2018
+Created on Sun Apr  1 11:54:59 2018
 
 @author: Ryan_Siv
 """
+
 import numpy as np
 import pandas as pd
 from matplotlib import pyplot as plt
@@ -42,9 +43,8 @@ def main():
     while True:
     # Retrieve Camera Frames
        ret, frame = cap.read()
-       coords = process_images(frame,client)
-       if coords:
-           cv2.circle(frame, (int(coords[0]), int(coords[1])), 10, (0,255,0), -1)
+       coords = process_test(frame,nose_cascade)
+#       cv2.circle(frame, (int(coords[0]), int(coords[1])), 10, (0,255,0), -1)
        cv2.imshow('img',frame)
        vector = convert_coords(coords, frames)
        game.run(vector)
@@ -74,9 +74,8 @@ def process_images(image, client):
     # Send to API for extraction
     response = client.face_detection(image = content)
     faces = response.face_annotations
-    for face in faces:
-        Nose_tip_coords = faces[0].landmarks[7] # Extract Nose Tip Coordinates
-        return((Nose_tip_coords.position.x,Nose_tip_coords.position.y,Nose_tip_coords.position.z))
+    Nose_tip_coords = faces[0].landmarks[7] # Extract Nose Tip Coordinates
+    return((Nose_tip_coords.position.x,Nose_tip_coords.position.y,Nose_tip_coords.position.z))
     
 def process_test(image, classifier):
     """
